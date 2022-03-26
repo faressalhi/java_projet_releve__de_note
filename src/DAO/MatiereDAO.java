@@ -21,44 +21,9 @@ public class MatiereDAO {
 		else System.out.println("Erreur dans l'ajout !!");
 	}
 	
-
-	public ArrayList <Matiere> getMatieres() throws SQLException{
-		String selectMatReq ="select * from produit ";
-		Statement  st = connection.createStatement();
-		ResultSet res = st.executeQuery(selectMatReq);
-		ArrayList <Matiere> matieres = new ArrayList <Matiere>();
-		while(res.next()) {
-			Matiere matiere = new Matiere();
-			matiere.setId_matiere(res.getString(1));
-			matiere.setNom_matiere(res.getString(2));
-			matiere.setCoef_matiere(res.getFloat(3));
-			matieres.add(matiere);
-		}
-		return matieres;
-	}
-	
-	public void deleteMatiere(long code) throws SQLException {
-		String deleteMatReq =" delete from matiere where code ='"+code+"'";
-		Statement  st = connection.createStatement();
-		int res = st.executeUpdate(deleteMatReq);
-		
-		if(res!=0) System.out.println("Matiere supprimé");
-		else System.out.println("Erreur dans la suppression !!");
-	}
-	
-	
-	/*
-	 * public Produit getProduitByCode(long code) throws SQLException { String
-	 * selectOneProdReq ="select * from produit where code = "+code+""; Statement st
-	 * = conn.createStatement(); ResultSet res = st.executeQuery(selectOneProdReq);
-	 * res.next(); Produit p = new Produit(res.getInt(1),
-	 * res.getString(2),res.getDouble(3)); return p; }
-	 */
-		
-	
 	public void updateMatiere(Matiere matiere) throws SQLException {
-		String updateMatReq ="update matiere set  designation='"+matiere.getNom_matiere()+"',prix = '"+matiere.getCoef_matiere()
-		+"'"+ " where code ='"+matiere.getId_matiere()+"'";
+		String updateMatReq ="update matiere set  NomMatiere='"+matiere.getNom_matiere()+"',CoefMatiere = '"+matiere.getCoef_matiere()
+		+"'"+ " where  IdMatiere ='"+matiere.getId_matiere()+"'";
 		Statement  st = connection.createStatement();
 		int res = st.executeUpdate(updateMatReq);
 		
@@ -67,6 +32,20 @@ public class MatiereDAO {
 	}
 	
 	
+	
+	
+	public void deleteMatiere(String code) throws SQLException {
+		String deleteMatReq =" delete from matiere where IdMatiere ='"+code+"'";
+		Statement  st = connection.createStatement();
+		int res = st.executeUpdate(deleteMatReq);
+		
+		if(res!=0) System.out.println("Matiere supprimé");
+		else System.out.println("Erreur dans la suppression !!");
+	}
+	
+
+	
+
 	
 	
 	

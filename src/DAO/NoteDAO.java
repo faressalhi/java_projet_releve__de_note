@@ -13,7 +13,7 @@ public class NoteDAO {
 	public Connection connection;
 	
 	public void ajouteNote(Note note) throws SQLException {
-		String insrtNoteReq =" insert into note values ('"+note.getId_etudiant()+"''"+note.getId_matiere()+"','"+note.getValeur_note()+"','"+note.getType_note()+"')";
+		String insrtNoteReq =" insert into note values ('"+note.getId_etudiant()+"','"+note.getId_matiere()+"','"+note.getValeur_note()+"','"+note.getType_note()+"')";
 		Statement  st = connection.createStatement();
 		int res = st.executeUpdate(insrtNoteReq);
 		
@@ -21,25 +21,18 @@ public class NoteDAO {
 		else System.out.println("Erreur dans l'ajout !!");
 	}
 	
-	
-	public ArrayList <Note> getNotes() throws SQLException{
-		String selectNoteReq ="select * from note ";
+
+	public void updateNote(Note note) throws SQLException {
+		String updateNoteReq ="update note set  ValeurNote ='"+note.getValeur_note()+"' where IdEtudiant  ='"+note.getId_etudiant()+"' and IdMatiere ='"+note.getId_matiere()+"' and TypeNote = '"+note.getType_note()+"'";
 		Statement  st = connection.createStatement();
-		ResultSet res = st.executeQuery(selectNoteReq);
-		ArrayList <Note> notes = new ArrayList <Note>();
-		while(res.next()) {
-			Note note = new Note();
-			note.setId_etudiant(res.getString(1));
-			note.setId_matiere(res.getString(2));
-			note.setValeur_note(res.getFloat(3));
-			note.setType_note(res.getString(4));
-			notes.add(note);
-		}
-		return notes;
+		int res = st.executeUpdate(updateNoteReq);
+		
+		if(res!=0) System.out.println("Note modifiée");
+		else System.out.println("Erreur dans la modification !!"); 
 	}
 	
-	public void deleteNote(long code) throws SQLException {
-		String deleteNoteReq =" delete from note where code ='"+code+"'";
+	public void deleteNote(String code1, String code2, String code3) throws SQLException {
+		String deleteNoteReq =" delete from note where IdEtudiant ='"+code1+"' and IdMatiere = '"+code2 +"' and TypeNote = '"+code3+"' ";
 		Statement  st = connection.createStatement();
 		int res = st.executeUpdate(deleteNoteReq);
 		
@@ -48,24 +41,8 @@ public class NoteDAO {
 	}
 	
 	
-	/*
-	 * public Produit getProduitByCode(long code) throws SQLException { String
-	 * selectOneProdReq ="select * from produit where code = "+code+""; Statement st
-	 * = conn.createStatement(); ResultSet res = st.executeQuery(selectOneProdReq);
-	 * res.next(); Produit p = new Produit(res.getInt(1),
-	 * res.getString(2),res.getDouble(3)); return p; }
-	 */
-		
+
 	
-	public void updateMatiere(Note note) throws SQLException {
-		String updateNoteReq ="update note set  designation='"+note.getType_note()+"',prix = '"+note.getId_etudiant()+"',prix = '"+note.getId_matiere()
-		+"'"+ " where code ='"+note.getId_note()+"'";
-		Statement  st = connection.createStatement();
-		int res = st.executeUpdate(updateNoteReq);
-		
-		if(res!=0) System.out.println("Note modifiée");
-		else System.out.println("Erreur dans la modification !!"); 
-	}
 	
 	
 	

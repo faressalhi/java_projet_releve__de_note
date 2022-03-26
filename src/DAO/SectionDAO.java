@@ -22,24 +22,19 @@ public Connection connection;
 		else System.out.println("Erreur dans l'ajout !!");
 	}
 	
-
-
-	public ArrayList <Section> getSections() throws SQLException{
-		String selectSecReq ="select * from section ";
+	public void updateSection(Section section) throws SQLException {
+		String updateSecReq ="update section set  NomSection='"+section.getNom_section()
+		+"'"+ " where IdSection ='"+section.getId_section()+"'";
 		Statement  st = connection.createStatement();
-		ResultSet res = st.executeQuery(selectSecReq);
-		ArrayList <Section> sections = new ArrayList<Section>();
-		while(res.next()) {
-			Section section = new Section() ;
-			section.setId_section(res.getString(1));
-			section.setNom_section(res.getString(2));
-			sections.add(section);
-		}
-		return sections;
+		int res = st.executeUpdate(updateSecReq);
+		
+		if(res!=0) System.out.println("Section modifiée");
+		else System.out.println("Erreur dans la modification !!"); 
 	}
+
 	
-	public void deleteSection(long code) throws SQLException {
-		String deleteSecReq =" delete from section where code ='"+code+"'";
+	public void deleteSection(String code) throws SQLException {
+		String deleteSecReq =" delete from section where IdSection ='"+code+"'";
 		Statement  st = connection.createStatement();
 		int res = st.executeUpdate(deleteSecReq);
 		
@@ -47,25 +42,10 @@ public Connection connection;
 		else System.out.println("Erreur dans la suppression !!");
 	}
 	
-	
-	/*
-	 * public Produit getProduitByCode(long code) throws SQLException { String
-	 * selectOneProdReq ="select * from produit where code = "+code+""; Statement st
-	 * = conn.createStatement(); ResultSet res = st.executeQuery(selectOneProdReq);
-	 * res.next(); Produit p = new Produit(res.getInt(1),
-	 * res.getString(2),res.getDouble(3)); return p; }
-	 */
+
 		
 	
-	public void updateSection(Section section) throws SQLException {
-		String updateSecReq ="update section set  designation='"+section.getNom_section()
-		+"'"+ " where code ='"+section.getId_section()+"'";
-		Statement  st = connection.createStatement();
-		int res = st.executeUpdate(updateSecReq);
-		
-		if(res!=0) System.out.println("Section modifiée");
-		else System.out.println("Erreur dans la modification !!"); 
-	}
+
 	
 		
 }
